@@ -56,3 +56,4 @@ doc/api/
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
+.metadata

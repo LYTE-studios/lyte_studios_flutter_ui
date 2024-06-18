@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
-class LyteTimePicker extends StatelessWidget {
+class LyteTimePicker extends StatefulWidget {
   final DateTime? selectedDatetime;
-
   final Function(DateTime?)? onChanged;
-
   final ScrollController? hourScrollController;
-
   final ScrollController? minuteScrollController;
 
   const LyteTimePicker({
@@ -18,30 +15,60 @@ class LyteTimePicker extends StatelessWidget {
   });
 
   @override
+  _LyteTimePickerState createState() => _LyteTimePickerState();
+}
+
+class _LyteTimePickerState extends State<LyteTimePicker> {
+  late int selectedHour;
+  late int selectedMinute;
+
+  @override
+  void initState() {
+    super.initState();
+    final now = DateTime.now();
+    selectedHour = widget.selectedDatetime?.hour ?? now.hour;
+    selectedMinute = widget.selectedDatetime?.minute ?? now.minute;
+  }
+
+  void _onHourChanged(int hour) {
+    setState(() {
+      selectedHour = hour;
+      _updateSelectedDateTime();
+    });
+  }
+
+  void _onMinuteChanged(int minute) {
+    setState(() {
+      selectedMinute = minute;
+      _updateSelectedDateTime();
+    });
+  }
+
+  void _updateSelectedDateTime() {
+    final now = DateTime.now();
+    final updatedDateTime = DateTime(
+      widget.selectedDatetime?.year ?? now.year,
+      widget.selectedDatetime?.month ?? now.month,
+      widget.selectedDatetime?.day ?? now.day,
+      selectedHour,
+      selectedMinute,
+    );
+    widget.onChanged?.call(updatedDateTime);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         const SizedBox(width: 32),
         Expanded(
           child: ListWheelScrollView.useDelegate(
-            controller: hourScrollController,
+            controller: widget.hourScrollController,
             itemExtent: 40,
             physics: const FixedExtentScrollPhysics(),
             overAndUnderCenterOpacity: 0.5,
             perspective: 0.01,
-            onSelectedItemChanged: (int hour) {
-              DateTime now = DateTime.now();
-
-              onChanged?.call(
-                DateTime(
-                  selectedDatetime?.year ?? now.year,
-                  selectedDatetime?.month ?? now.month,
-                  selectedDatetime?.day ?? now.day,
-                  hour,
-                  selectedDatetime?.minute ?? 0,
-                ),
-              );
-            },
+            onSelectedItemChanged: _onHourChanged,
             childDelegate: ListWheelChildBuilderDelegate(
               builder: (context, index) {
                 return Center(
@@ -56,24 +83,12 @@ class LyteTimePicker extends StatelessWidget {
         ),
         Expanded(
           child: ListWheelScrollView.useDelegate(
-            controller: minuteScrollController,
+            controller: widget.minuteScrollController,
             itemExtent: 40,
             physics: const FixedExtentScrollPhysics(),
             overAndUnderCenterOpacity: 0.5,
             perspective: 0.01,
-            onSelectedItemChanged: (int minute) {
-              DateTime now = DateTime.now();
-
-              onChanged?.call(
-                DateTime(
-                  selectedDatetime?.year ?? now.year,
-                  selectedDatetime?.month ?? now.month,
-                  selectedDatetime?.day ?? now.day,
-                  selectedDatetime?.hour ?? 0,
-                  minute,
-                ),
-              );
-            },
+            onSelectedItemChanged: _onMinuteChanged,
             childDelegate: ListWheelChildBuilderDelegate(
               builder: (context, index) {
                 return Center(

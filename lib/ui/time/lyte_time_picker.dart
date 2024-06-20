@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class LyteTimePicker extends StatefulWidget {
   final DateTime? selectedDatetime;
+  final double itemExtent;
   final Function(DateTime?)? onChanged;
-  final ScrollController? hourScrollController;
-  final ScrollController? minuteScrollController;
+  final FixedExtentScrollController? hourScrollController;
+  final FixedExtentScrollController? minuteScrollController;
 
   const LyteTimePicker({
     super.key,
@@ -12,6 +13,7 @@ class LyteTimePicker extends StatefulWidget {
     this.onChanged,
     this.hourScrollController,
     this.minuteScrollController,
+    this.itemExtent = 30
   });
 
   @override
@@ -21,6 +23,7 @@ class LyteTimePicker extends StatefulWidget {
 class _LyteTimePickerState extends State<LyteTimePicker> {
   late int selectedHour;
   late int selectedMinute;
+  late FixedExtentScrollController hourScrollController;
 
   @override
   void initState() {
@@ -28,6 +31,7 @@ class _LyteTimePickerState extends State<LyteTimePicker> {
     final now = DateTime.now();
     selectedHour = widget.selectedDatetime?.hour ?? now.hour;
     selectedMinute = widget.selectedDatetime?.minute ?? now.minute;
+    hourScrollController = FixedExtentScrollController(initialItem: 20 );
   }
 
   void _onHourChanged(int hour) {
@@ -63,8 +67,8 @@ class _LyteTimePickerState extends State<LyteTimePicker> {
         const SizedBox(width: 32),
         Expanded(
           child: ListWheelScrollView.useDelegate(
-            controller: widget.hourScrollController,
-            itemExtent: 40,
+            controller: hourScrollController,
+            itemExtent: widget.itemExtent,
             physics: const FixedExtentScrollPhysics(),
             overAndUnderCenterOpacity: 0.5,
             perspective: 0.01,
@@ -73,7 +77,7 @@ class _LyteTimePickerState extends State<LyteTimePicker> {
               builder: (context, index) {
                 return Center(
                   child: Text(
-                    '$index h',
+                    '$index',
                   ),
                 );
               },
@@ -84,7 +88,7 @@ class _LyteTimePickerState extends State<LyteTimePicker> {
         Expanded(
           child: ListWheelScrollView.useDelegate(
             controller: widget.minuteScrollController,
-            itemExtent: 40,
+            itemExtent: widget.itemExtent,
             physics: const FixedExtentScrollPhysics(),
             overAndUnderCenterOpacity: 0.5,
             perspective: 0.01,
@@ -93,7 +97,7 @@ class _LyteTimePickerState extends State<LyteTimePicker> {
               builder: (context, index) {
                 return Center(
                   child: Text(
-                    '$index min',
+                    '$index',
                   ),
                 );
               },

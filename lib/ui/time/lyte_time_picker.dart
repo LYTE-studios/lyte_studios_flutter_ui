@@ -86,57 +86,97 @@ class LyteTimePickerState extends State<LyteTimePicker> {
         ),
         Row(
           children: <Widget>[
-            const SizedBox(
-              width: 27,
-            ),
-            Expanded(
-              child: ListWheelScrollView.useDelegate(
-                controller: hourScrollController,
-                itemExtent: widget.itemExtent,
-                physics: const FixedExtentScrollPhysics(),
-                overAndUnderCenterOpacity: 0.5,
-                perspective: 0.01,
-                onSelectedItemChanged: _onHourChanged,
-                childDelegate: ListWheelChildBuilderDelegate(
-                  builder: (context, index) {
-                    return Center(
-                      child: Text(
-                        LyteDateTimeUtil.formatTimeNumber(index),
-                        style: widget.textStyle,
-                      ),
-                    );
-                  },
-                  childCount: 24,
-                ),
-              ),
-            ),
-            Expanded(
-              child: ListWheelScrollView.useDelegate(
-                controller: minuteScrollController,
-                itemExtent: widget.itemExtent,
-                physics: const FixedExtentScrollPhysics(),
-                overAndUnderCenterOpacity: 0.5,
-                perspective: 0.01,
-                onSelectedItemChanged: _onMinuteChanged,
-                childDelegate: ListWheelChildBuilderDelegate(
-                  builder: (context, index) {
-                    return Center(
-                      child: Text(
-                        LyteDateTimeUtil.formatTimeNumber(index),
-                        style: widget.textStyle,
-                      ),
-                    );
-                  },
-                  childCount: 60,
+            const Spacer(),
+            SizedBox(
+              width: 42,
+              child: _ShaderMask(
+                child: ListWheelScrollView.useDelegate(
+                  controller: hourScrollController,
+                  itemExtent: widget.itemExtent,
+                  physics: const FixedExtentScrollPhysics(),
+                  overAndUnderCenterOpacity: 0.5,
+                  perspective: 0.01,
+                  onSelectedItemChanged: _onHourChanged,
+                  childDelegate: ListWheelChildBuilderDelegate(
+                    builder: (context, index) {
+                      return Center(
+                        child: Text(
+                          LyteDateTimeUtil.formatTimeNumber(index),
+                          style: widget.textStyle,
+                        ),
+                      );
+                    },
+                    childCount: 24,
+                  ),
                 ),
               ),
             ),
             const SizedBox(
-              width: 27,
-            ), // Adjust as needed
+              width: 24,
+            ),
+            SizedBox(
+              width: 42,
+              child: _ShaderMask(
+                child: ListWheelScrollView.useDelegate(
+                  controller: minuteScrollController,
+                  itemExtent: widget.itemExtent,
+                  physics: const FixedExtentScrollPhysics(),
+                  overAndUnderCenterOpacity: 0.5,
+                  perspective: 0.01,
+                  onSelectedItemChanged: _onMinuteChanged,
+                  childDelegate: ListWheelChildBuilderDelegate(
+                    builder: (context, index) {
+                      return Center(
+                        child: Text(
+                          LyteDateTimeUtil.formatTimeNumber(index),
+                          style: widget.textStyle,
+                        ),
+                      );
+                    },
+                    childCount: 60,
+                  ),
+                ),
+              ),
+            ), //
+            const Spacer(),
+            // Adjust as needed
           ],
         ),
       ],
+    );
+  }
+}
+
+class _ShaderMask extends StatelessWidget {
+  final Widget child;
+
+  const _ShaderMask({
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      shaderCallback: (Rect rect) {
+        return const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.grey,
+            Colors.transparent,
+            Colors.transparent,
+            Colors.grey,
+          ],
+          stops: [
+            0.0,
+            0.1,
+            0.9,
+            1.0
+          ], // 10% purple, 80% transparent, 10% purple
+        ).createShader(rect);
+      },
+      blendMode: BlendMode.dstOut,
+      child: child,
     );
   }
 }

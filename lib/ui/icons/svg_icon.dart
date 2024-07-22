@@ -30,10 +30,7 @@ class SvgIcon extends StatelessWidget {
       height: size,
       width: size,
       colorFilter: leaveUnaltered
-          ? const ColorFilter.mode(
-              Colors.transparent,
-              BlendMode.clear,
-            )
+          ? null
           : ColorFilter.mode(
               color ?? Theme.of(context).colorScheme.outline,
               BlendMode.srcIn,

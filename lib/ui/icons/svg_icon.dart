@@ -15,16 +15,36 @@ class SvgIcon extends StatelessWidget {
   /// Set this to true for colored icons
   final bool leaveUnaltered;
 
+  final bool useRawCode;
+
   const SvgIcon(
     this.icon, {
     super.key,
     this.color,
     this.size = 16,
     this.leaveUnaltered = false,
+    this.useRawCode = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (useRawCode) {
+      return SvgPicture.string(
+        icon,
+        height: size,
+        width: size,
+        colorFilter: leaveUnaltered
+            ? null
+            : ColorFilter.mode(
+                color ?? Theme.of(context).colorScheme.outline,
+                BlendMode.srcIn,
+              ),
+        theme: SvgTheme(
+          fontSize: size,
+        ),
+      );
+    }
+
     return SvgPicture.asset(
       icon,
       height: size,

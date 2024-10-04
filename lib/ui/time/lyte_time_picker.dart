@@ -111,8 +111,14 @@ class LyteTimePickerState extends State<LyteTimePicker> {
                 ),
               ),
             ),
-            const SizedBox(
+            SizedBox(
               width: 24,
+              child: Center(
+                child: Text(
+                  ':',
+                  style: widget.textStyle,
+                ),
+              ),
             ),
             SizedBox(
               width: 42,

@@ -8,17 +8,21 @@ class ClearInkWell extends StatelessWidget {
 
   final Function()? onLongTap;
 
+  final bool enabled;
+
   const ClearInkWell({
     super.key,
     required this.child,
     required this.onTap,
     this.onLongTap,
+    this.enabled = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      enableFeedback: enabled,
+      onTap: !enabled ? null : onTap,
       onLongPress: onLongTap,
       overlayColor: WidgetStateColor.transparent,
       highlightColor: Colors.transparent,

@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 mixin ScreenStateMixin<T extends StatefulWidget> on State<T> {
   bool loading = false;
 
+  String? error;
+
+  void setError(String value) {
+    setState(() {
+      error = value;
+    });
+  }
+
   @override
   void setState(VoidCallback fn) {
     if (!mounted) {

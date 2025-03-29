@@ -24,7 +24,7 @@ mixin ScreenStateMixin<T extends StatefulWidget> on State<T> {
     }
   }
 
-  String get screenName => T.runtimeType.toString();
+  String get screenName => widget.runtimeType.toString();
 
   /// Track additional properties specific to this screen
   Map<String, dynamic>? get screenProperties => null;

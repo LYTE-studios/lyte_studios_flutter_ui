@@ -39,6 +39,7 @@ class AnalyticsService {
     if (!_initialized) return;
     _mixpanel.track(eventName, properties: properties);
   }
+
   // Screen tracking
   void trackScreenView(String screenName) {
     trackEvent('Screen View', properties: {'screen': screenName});

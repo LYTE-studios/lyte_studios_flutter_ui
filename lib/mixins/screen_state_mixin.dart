@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:lyte_studios_flutter_ui/mixins/screen_analytics_mixin.dart';
+import 'package:lyte_studios_flutter_ui/services/analytics_service.dart';
 
-mixin ScreenStateMixin<T extends StatefulWidget> on State<T> {
+mixin ScreenStateMixin on ScreenAnalyticsMixin {
   bool loading = false;
 
   String? error;
 
   void setError(String value) {
+    AnalyticsService.instance.trackError(
+      errorType: 'Data Error',
+      errorMessage: value,
+    );
     setState(() {
       error = value;
     });

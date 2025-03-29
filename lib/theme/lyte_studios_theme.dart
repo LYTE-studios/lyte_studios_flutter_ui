@@ -1,4 +1,4 @@
-library lyte_studios_theme;
+library;
 
 // TODO:
 // Create a theme module handling import/export of themes configurable in builders

@@ -1,4 +1,4 @@
-library lyte_studios_ui;
+library;
 
 // TODO: Add documentation for [LyteTimePicker]
 // TODO: Add widget tests for [LyteTimePicker]

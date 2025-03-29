@@ -1,3 +1,3 @@
-library lyte_studios_translations;
+library;
 
 // TODO: Create translations module handling language changes, import/export of keys, ...

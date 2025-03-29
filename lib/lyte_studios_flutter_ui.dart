@@ -1,4 +1,4 @@
-library lyte_studios_flutter_ui;
+library;
 
 export 'ui/lyte_studios_ui.dart';
 export 'theme/lyte_studios_theme.dart';

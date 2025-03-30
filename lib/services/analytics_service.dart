@@ -22,9 +22,14 @@ class AnalyticsService {
   }
 
   // User identification
-  void identify(String userId) {
+  void identify(String userId, {Map<String, dynamic>? properties}) {
     if (!_initialized) return;
     _mixpanel.identify(userId);
+    if (properties != null) {
+      properties.forEach((key, value) {
+        _mixpanel.getPeople().set(key, value);
+      });
+    }
   }
 
   void setUserProperties(Map<String, dynamic> properties) {

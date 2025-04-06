@@ -20,7 +20,7 @@ extension HexColor on Color {
     );
   }
 
-  Color darken([double amount = .5]) {
+  Color darken([double amount = .1]) {
     assert(amount >= 0 && amount <= 1);
 
     final hsl = HSLColor.fromColor(this);
@@ -29,7 +29,7 @@ extension HexColor on Color {
     return hslDark.toColor();
   }
 
-  Color lighten([double amount = .1]) {
+  Color lighten([double amount = .05]) {
     assert(amount >= 0 && amount <= 1);
 
     final hsl = HSLColor.fromColor(this);

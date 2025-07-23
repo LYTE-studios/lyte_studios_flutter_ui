@@ -15,7 +15,10 @@ class SvgIcon extends StatelessWidget {
   /// Set this to true for colored icons
   final bool leaveUnaltered;
 
+  // Uses the raw SVG code instead of an asset
   final bool useRawCode;
+
+  final BoxFit boxFit;
 
   const SvgIcon(
     this.icon, {
@@ -24,6 +27,7 @@ class SvgIcon extends StatelessWidget {
     this.size = 16,
     this.leaveUnaltered = false,
     this.useRawCode = false,
+    this.boxFit = BoxFit.contain,
   });
 
   @override
@@ -33,6 +37,7 @@ class SvgIcon extends StatelessWidget {
         icon,
         height: size,
         width: size,
+        fit: boxFit,
         colorFilter: leaveUnaltered
             ? null
             : ColorFilter.mode(

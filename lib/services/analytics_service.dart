@@ -42,12 +42,14 @@ class AnalyticsService {
   // Event tracking
   void trackEvent(String eventName, {Map<String, dynamic>? properties}) {
     if (!_initialized) return;
-    _mixpanel.track(eventName, properties: properties);
+    _mixpanel.track(eventName, properties: properties).catchError(
+          (e) => print(e),
+        );
   }
 
   // Screen tracking
   void trackScreenView(String screenName) {
-    trackEvent('Screen View', properties: {'screen': screenName});
+    trackEvent('Screen View: $screenName', properties: {'screen': screenName});
   }
 
   void trackError({
